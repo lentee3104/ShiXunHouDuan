@@ -74,7 +74,8 @@ public class TokenService {
     private void updateRefreshToken(RefreshTokenEntity refreshTokenEntity, HttpServletRequest request) {
         refreshTokenEntity.refreshTime = LocalDateTime.now();
         refreshTokenEntity.ip = request.getRemoteAddr();
-        refreshTokenEntity.userAgent = request.getHeader("User-Agent");
+        var userAgent = request.getHeader("user-agent");
+        refreshTokenEntity.userAgent = userAgent==null ? "unknown" : userAgent;
         refreshTokenRepository.save(refreshTokenEntity);
     }
 

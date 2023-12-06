@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -19,10 +20,13 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPublicKey;
 
-/** 用于生成和管理 JWK */
+/** 用于生成和管理 JWK（Json Web Key） */
 @Service
+@CommonsLog
 public class JwkService {
+    // 用于保存密钥对的文件名
     private static final String RSA_KEY_FILE_NAME = "demo-app-rsa.key";
+
     private KeyPair keyPair;
 
     public JwkService() throws Exception {
@@ -38,7 +42,9 @@ public class JwkService {
         return new JWKSet(rsaKey);
     }
 
-    /* 用于验证 JWT 的解码器
+    /* 用于验证 JWT 的解码器,
+    // 由于 Spring Security OAuth2 已经提供了，所以不需要自己实现
+    // 但要在配置文件中给出用于获取公钥的 URL
     @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(getPublicKey()).build();
@@ -74,7 +80,7 @@ public class JwkService {
         var fileStream = new FileOutputStream(RSA_KEY_FILE_NAME);
         try (var objectOutputStream = new ObjectOutputStream(fileStream)) {
             objectOutputStream.writeObject(keyPair);
-            System.out.println("已创建新的密钥对文件: " + Paths.get(RSA_KEY_FILE_NAME).toAbsolutePath());
+            log.info("已创建新的密钥对文件: " + Paths.get(RSA_KEY_FILE_NAME).toAbsolutePath());
         }
     }
 

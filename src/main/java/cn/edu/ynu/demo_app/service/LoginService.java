@@ -6,7 +6,6 @@ import cn.edu.ynu.demo_app.entity.UserEntity;
 import cn.edu.ynu.demo_app.exception.BusinessException;
 import cn.edu.ynu.demo_app.repository.ILoginLockerRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

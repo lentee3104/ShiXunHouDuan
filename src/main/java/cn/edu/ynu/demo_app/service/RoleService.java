@@ -4,6 +4,7 @@ import cn.edu.ynu.demo_app.dto.NewRoleRo;
 import cn.edu.ynu.demo_app.dto.UpdateRoleRo;
 import cn.edu.ynu.demo_app.entity.RoleEntity;
 import cn.edu.ynu.demo_app.repository.IRoleRepository;
+import lombok.extern.apachecommons.CommonsLog;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@CommonsLog
 public class RoleService {
     private final IRoleRepository roleRepository;
     private final ModelMapper modelMapper;
@@ -28,6 +30,7 @@ public class RoleService {
             ro.code = "admin";
             ro.name = "管理员";
             addRole(ro);
+            log.info("内置角色(系统管理员)初始化完成！");
         });
 
         roleRepository.findByCode("user").ifPresentOrElse(roleEntity -> {}, () -> {
@@ -35,23 +38,22 @@ public class RoleService {
             ro.code = "user";
             ro.name = "普通用户";
             addRole(ro);
+            log.info("内置角色(普通用户)初始化完成！");
         });
     }
+
     public List<RoleEntity> getAllRoles() {
         return roleRepository.findAll();
     }
 
     public RoleEntity addRole(NewRoleRo ro) {
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.code = ro.code;
-        roleEntity.name = ro.name;
+        var roleEntity = modelMapper.map(ro, RoleEntity.class);
         return roleRepository.save(roleEntity);
     }
 
     public RoleEntity updateRole(UpdateRoleRo ro) {
         var roleEntity = getRoleById(ro.id).orElseThrow(() -> new RuntimeException("角色不存在"));
-        roleEntity.code = ro.code;
-        roleEntity.name = ro.name;
+        modelMapper.map(ro, roleEntity);
         return roleRepository.save(roleEntity);
     }
 

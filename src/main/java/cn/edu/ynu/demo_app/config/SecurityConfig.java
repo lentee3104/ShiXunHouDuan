@@ -22,10 +22,12 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain apiSecurityfilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize ->
-            authorize.requestMatchers("/public/**", "/auth/**", "/actuator/**").permitAll()
-                     .anyRequest().authenticated()
+        // 公开的API路径
+        var publicPaths = new String[]{"/public/**", "/auth/**"};
 
+        http.authorizeHttpRequests(authorize ->
+            authorize.requestMatchers(publicPaths).permitAll()
+                     .anyRequest().authenticated()
         );
 
         http.oauth2ResourceServer(server->{
