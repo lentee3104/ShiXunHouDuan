@@ -31,6 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+### macOS ###
+.DS_Store
 
 ### 忽略用于记录敏感信息的配置文件 ###
 src/main/resources/application-local.properties
