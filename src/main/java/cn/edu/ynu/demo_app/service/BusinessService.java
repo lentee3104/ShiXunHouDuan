@@ -27,4 +27,8 @@ public class BusinessService {
     public List<BusinessEntity> findByOrderTypeId(Integer order_type_id){
         return iBusinessRepository.findByOrderTypeId(order_type_id);
     }
+
+    public BusinessEntity findByBusinessId(Integer business_id){
+        return iBusinessRepository.findByBusinessId(business_id);
+    }
 }

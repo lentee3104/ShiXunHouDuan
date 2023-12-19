@@ -10,4 +10,5 @@ import java.util.List;
 public interface IBusinessRepository extends JpaRepository<BusinessEntity, Integer> {
     List<BusinessEntity> findByBusinessIdIsNotNull();
     List<BusinessEntity> findByOrderTypeId(Integer order_type_id);
+    BusinessEntity findByBusinessId(Integer business_id);
 }
