@@ -18,15 +18,19 @@ import java.util.List;
 @Service
 @Component
 @CommonsLog
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrderDetailService {
     @Resource
     private IOrderDetailRepository iOrderDetailRepository;
-    OrderTableService orderTableService;
-    FoodService foodService;
+    private final OrderTableService orderTableService;
+    private final FoodService foodService;
 
-    public List<OrderTableEntity> findByOrderTableEntityOrderId(Integer order_id){
+    public OrderDetailService(IOrderDetailRepository iOrderDetailRepository, OrderTableService orderTableService, FoodService foodService) {
+        this.iOrderDetailRepository = iOrderDetailRepository;
+        this.orderTableService = orderTableService;
+        this.foodService = foodService;
+    }
+
+    public List<OrderDetailEntity> findByOrderTableEntityOrderId(Integer order_id){
         return iOrderDetailRepository.findByOrderTableEntityOrderId(order_id);
     }
 

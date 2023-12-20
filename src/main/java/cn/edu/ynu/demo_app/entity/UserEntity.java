@@ -2,12 +2,19 @@ package cn.edu.ynu.demo_app.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import manifold.ext.props.rt.api.var;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseAuditingEntity{
     @Column(length = 20, nullable = false, unique = true)
@@ -27,6 +34,8 @@ public class UserEntity extends BaseAuditingEntity{
     @OneToOne(mappedBy = "user")
     @var
     RefreshTokenEntity refreshToken;
+    @var
+    Integer userSex = 1;
 
 }
 

@@ -1,5 +1,11 @@
 package cn.edu.ynu.demo_app.controller;
 
+
+/*已弃用，讲customer改为用user*/
+
+
+
+/*
 import cn.edu.ynu.demo_app.entity.CustomerEntity;
 import cn.edu.ynu.demo_app.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequestMapping("/public")
 @Tag(name = "Customer", description = "用户相关（因为老师写代码的时候写了一个User，所以我把我们的写成了Customer）" )
-@AllArgsConstructor
-@NoArgsConstructor
 public class CustomerController {
     @Resource
     CustomerService customerService;
@@ -34,3 +38,6 @@ public class CustomerController {
         }
     }
 }
+*/
+
+

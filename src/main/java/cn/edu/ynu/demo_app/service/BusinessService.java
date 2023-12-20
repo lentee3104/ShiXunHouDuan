@@ -14,11 +14,13 @@ import java.util.List;
 @Service
 @Component
 @CommonsLog
-@AllArgsConstructor
-@NoArgsConstructor
 public class BusinessService {
     @Resource
-    private IBusinessRepository iBusinessRepository;
+    private final IBusinessRepository iBusinessRepository;
+
+    public BusinessService(IBusinessRepository iBusinessRepository){
+        this.iBusinessRepository = iBusinessRepository;
+    }
 
     public List<BusinessEntity> findByBusinessIdIsNotNull(){
         return iBusinessRepository.findByBusinessIdIsNotNull();

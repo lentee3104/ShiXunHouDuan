@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface IDeliveryAddressRepository extends JpaRepository<DeliveryAddressEntity, Integer>{
-    List<DeliveryAddressEntity> findByCustomerEntity_CustomerId(Integer customer_id);
+    List<DeliveryAddressEntity> findByUserEntityCode(String user_code);
     DeliveryAddressEntity save(DeliveryAddressEntity deliveryAddressEntity);
     DeliveryAddressEntity deleteByDaId(Integer da_id);
     DeliveryAddressEntity findByDaId(Integer da_id);

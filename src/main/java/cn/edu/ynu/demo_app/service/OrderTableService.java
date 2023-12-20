@@ -1,9 +1,6 @@
 package cn.edu.ynu.demo_app.service;
 
-import cn.edu.ynu.demo_app.entity.BusinessEntity;
-import cn.edu.ynu.demo_app.entity.CustomerEntity;
-import cn.edu.ynu.demo_app.entity.DeliveryAddressEntity;
-import cn.edu.ynu.demo_app.entity.OrderTableEntity;
+import cn.edu.ynu.demo_app.entity.*;
 import cn.edu.ynu.demo_app.repository.IOrderTableRepository;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -13,30 +10,37 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Component
 @CommonsLog
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrderTableService {
     @Resource
-    private IOrderTableRepository iOrderTableRepository;
-    BusinessService businessService;
-    CustomerService customerService;
-    DeliveryAddressService deliveryAddressService;
+    private final IOrderTableRepository iOrderTableRepository;
+    private final BusinessService businessService;
+    private final DeliveryAddressService deliveryAddressService;
+    private final UserService userService;
 
-    public OrderTableEntity findByCustomerEntity_CustomerIdAndBusinessEntity_BusinessIdAndOrderState(Integer customer_id, Integer business_id, Integer order_state){
-        return iOrderTableRepository.findByCustomerEntity_CustomerIdAndBusinessEntity_BusinessIdAndOrderState(customer_id, business_id, order_state);
+    public OrderTableService(IOrderTableRepository iOrderTableRepository, BusinessService businessService, DeliveryAddressService deliveryAddressService, UserService userService) {
+        this.iOrderTableRepository = iOrderTableRepository;
+        this.businessService = businessService;
+        this.deliveryAddressService = deliveryAddressService;
+        this.userService = userService;
+    }
+
+    public OrderTableEntity findByUserEntityCodeAndBusinessEntity_BusinessIdAndOrderState(String user_code, Integer business_id, Integer order_state){
+        return iOrderTableRepository.findByUserEntityCodeAndBusinessEntity_BusinessIdAndOrderState(user_code, business_id, order_state);
     }
 
     public OrderTableEntity findByOrderId(Integer order_id){
         return iOrderTableRepository.findByOrderId(order_id);
     }
 
-    public OrderTableEntity save(Integer order_id, LocalDateTime order_data, Integer order_state, Double order_total, Integer business_id, Integer customer_id, Integer da_id){
+    public OrderTableEntity save(Integer order_id, LocalDateTime order_data, Integer order_state, Double order_total, Integer business_id, String user_code, Integer da_id){
         BusinessEntity businessEntity = businessService.findByBusinessId(business_id);
-        CustomerEntity customerEntity = customerService.findByCustomerId(customer_id);
+        Optional<UserEntity> userEntity = userService.getUserByCode(user_code);
+        UserEntity user = userEntity.get();
         DeliveryAddressEntity deliveryAddressEntity = deliveryAddressService.findByDaId(da_id);
 
         if(order_id == 0){
@@ -45,7 +49,7 @@ public class OrderTableService {
                     .orderState(order_state)
                     .orderTotal(order_total)
                     .businessEntity(businessEntity)
-                    .customerEntity(customerEntity)
+                    .userEntity(user)
                     .deliveryAddressEntity(deliveryAddressEntity)
                     .build();
             return iOrderTableRepository.save(newOrderTable);
@@ -56,7 +60,7 @@ public class OrderTableService {
                     .orderState(order_state)
                     .orderTotal(order_total)
                     .businessEntity(businessEntity)
-                    .customerEntity(customerEntity)
+                    .userEntity(user)
                     .deliveryAddressEntity(deliveryAddressEntity)
                     .build();
             return iOrderTableRepository.save(newOrderTable);

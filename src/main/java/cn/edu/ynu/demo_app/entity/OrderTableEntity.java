@@ -24,10 +24,10 @@ public class OrderTableEntity {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "customer_id",/*这里和数据库表的列名对应*/
-            referencedColumnName = "customerId"/*这里和entity的Business类里面的属性对应*/
+            name = "user_code",/*这里是当前表叫啥*/
+            referencedColumnName = "code"/*这里是对应的外键的列名*/
     )
-    private CustomerEntity customerEntity;
+    private UserEntity userEntity;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(

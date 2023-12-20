@@ -1,5 +1,11 @@
 package cn.edu.ynu.demo_app.entity;
 
+
+/*已弃用，改为使用user*/
+
+
+/*
+
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
@@ -30,3 +36,4 @@ public class CustomerEntity {
     public String customerImg;
     public Integer delTag = 1;
 }
+*/

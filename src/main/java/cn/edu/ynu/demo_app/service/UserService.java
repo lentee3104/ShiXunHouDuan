@@ -3,6 +3,7 @@ package cn.edu.ynu.demo_app.service;
 import cn.edu.ynu.demo_app.dto.NewUserRo;
 import cn.edu.ynu.demo_app.entity.UserEntity;
 import cn.edu.ynu.demo_app.exception.BusinessException;
+import cn.edu.ynu.demo_app.repository.IRefreshTokenRepository;
 import cn.edu.ynu.demo_app.repository.IUserRepository;
 import lombok.extern.apachecommons.CommonsLog;
 import org.modelmapper.ModelMapper;
@@ -22,11 +23,13 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
+    private final IRefreshTokenRepository refreshTokenRepository;
 
-    UserService(IUserRepository userRepository, RoleService roleService, ModelMapper modelMapper) {
+    UserService(IUserRepository userRepository, RoleService roleService, ModelMapper modelMapper, IRefreshTokenRepository refreshTokenRepository) {
 
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.refreshTokenRepository = refreshTokenRepository;
         this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         this.roleService = roleService;
     }
@@ -58,6 +61,9 @@ public class UserService {
         UserEntity user = modelMapper.map(ro, UserEntity.class);
         user.password = passwordEncoder.encode(ro.password);
         user.roles.add(roleService.getUserRole()); // 默认角色为普通用户
+        user.userSex = ro.user_sex;
+
+
 
         return userRepository.save(user);
     }
@@ -74,6 +80,7 @@ public class UserService {
     public void deleteUserById(UUID userId) {
         var user = this.getUserById(userId).orElseThrow(() -> new RuntimeException("用户不存在"));
         Assert.isTrue(!user.code.equals("admin"), "不能删除管理员！");
+        refreshTokenRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
     }
 

@@ -14,11 +14,13 @@ import java.util.List;
 @Service
 @Component
 @CommonsLog
-@AllArgsConstructor
-@NoArgsConstructor
 public class FoodService {
     @Resource
-    IFoodRepository iFoodRepository;
+    private final IFoodRepository iFoodRepository;
+
+    public FoodService(IFoodRepository iFoodRepository) {
+        this.iFoodRepository = iFoodRepository;
+    }
 
     public List<FoodEntity> findByBusinessEntityBusinessId(Integer business_id){
         return iFoodRepository.findByBusinessEntityBusinessId(business_id);

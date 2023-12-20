@@ -6,7 +6,9 @@ import cn.edu.ynu.demo_app.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,8 @@ public class AdminController extends BaseController {
         return modelMapper.map(newUser, UserDto.class);
     }
 
+    @Modifying
+    @Transactional
     @Operation(summary = "删除用户",description = "根据用户的 id 删除用户。")
     @DeleteMapping("user/{userId}")
     public boolean deleteUser(@PathVariable UUID userId) {

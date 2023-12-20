@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface IOrderDetailRepository extends JpaRepository<OrderDetailEntity, Integer> {
-    List<OrderTableEntity> findByOrderTableEntityOrderId(Integer order_id);
+    List<OrderDetailEntity> findByOrderTableEntityOrderId(Integer order_id);
     OrderDetailEntity save(OrderDetailEntity orderDetailEntity);
 }

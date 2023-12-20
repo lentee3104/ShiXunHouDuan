@@ -20,6 +20,9 @@ public class NewUserRo {
     @Schema(description = "用户密码")
     @var @NotEmpty
     String password;
+    @Schema(description = "用户性别")
+    @var
+    Integer user_sex;
 
 }
 

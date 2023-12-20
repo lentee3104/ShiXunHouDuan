@@ -22,8 +22,8 @@ public class DeliveryAddressEntity {
     public String address;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "customer_id",/*这里和数据库表的列名对应*/
-            referencedColumnName = "customerId"/*这里和entity的Business类里面的属性对应*/
+            name = "user_code",/*当前表的字段*/
+            referencedColumnName = "code"/*引用表对应的字段，如果不注明，默认就是引用表的主键*/
     )
-    private CustomerEntity customerEntity;
+    private UserEntity userEntity;
 }

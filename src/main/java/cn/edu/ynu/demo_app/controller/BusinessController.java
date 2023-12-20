@@ -3,6 +3,7 @@ package cn.edu.ynu.demo_app.controller;
 import cn.edu.ynu.demo_app.entity.BusinessEntity;
 import cn.edu.ynu.demo_app.service.BusinessService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,9 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/public")
+@SecurityRequirement(name = "bearerAuth")
+@RequestMapping("/api/business")
 @Tag(name = "Business", description = "店铺相关" )
-@AllArgsConstructor
-@NoArgsConstructor
 public class BusinessController{
     @Resource
     BusinessService businessService;

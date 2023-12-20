@@ -3,6 +3,7 @@ package cn.edu.ynu.demo_app.controller;
 import cn.edu.ynu.demo_app.entity.FoodEntity;
 import cn.edu.ynu.demo_app.service.FoodService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -18,10 +19,9 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/public")
+@SecurityRequirement(name = "bearerAuth")
+@RequestMapping("/api/food")
 @Tag(name = "Food", description = "商家对应售卖的食品" )
-@AllArgsConstructor
-@NoArgsConstructor
 public class FoodController {
     @Resource
     private FoodService foodService;

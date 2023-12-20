@@ -1,6 +1,8 @@
 package cn.edu.ynu.demo_app.service;
 
-import cn.edu.ynu.demo_app.entity.CustomerEntity;
+/*已弃用，改为使用user*/
+
+/*import cn.edu.ynu.demo_app.entity.CustomerEntity;
 import cn.edu.ynu.demo_app.repository.ICustomerRepository;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -21,4 +23,5 @@ public class CustomerService {
     public CustomerEntity findByCustomerId(Integer customer_id){
         return iCustomerRepository.findByCustomerId(customer_id);
     }
-}
+
+}*/
